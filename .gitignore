@@ -1,0 +1,6 @@
+### IntelliJ IDEA ###
+.idea/
+target/
+*.iml
+*.class
+*.orig
