@@ -110,4 +110,13 @@ public interface DateTimeFormatStandard {
      * 2022-09-04 10:06:39.123 -06:00 【表示 西六区 2022年9月4日10点6分39秒123毫秒】
      */
     String STANDARD_11 = "yyyy-MM-dd HH:mm:ss.SSS xxx";
+
+    /**
+     * 24小时制 "年-月-日 时:分:秒.纳秒"
+     * <p>
+     * 格式：
+     * <p>
+     * 2022-09-04 10:06:39.123250235 【表示 2022年9月4日10点6分39秒123250235纳秒】
+     */
+    String STANDARD_12 = "yyyy-MM-dd HH:mm:ss.SSSSSSSSS";
 }
