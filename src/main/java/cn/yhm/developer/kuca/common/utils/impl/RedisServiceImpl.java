@@ -1,6 +1,9 @@
 package cn.yhm.developer.kuca.common.utils.impl;
 
+import cn.yhm.developer.kuca.common.utils.standard.JsonService;
 import cn.yhm.developer.kuca.common.utils.standard.RedisService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -17,7 +20,6 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 复述,服务
  * Redis工具类
  *
  * @author victor2015yhm@gmail.com
@@ -31,6 +33,13 @@ public class RedisServiceImpl implements RedisService {
     @Autowired
     public void setRedisTemplate(StringRedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
+    }
+
+    private JsonService jsonService;
+
+    @Autowired
+    public void setJsonService(JsonService jsonService) {
+        this.jsonService = jsonService;
     }
 
     @Override
@@ -124,8 +133,20 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
+    public <T> void set(String key, T value) {
+        String json = jsonService.toJson(value);
+        this.set(key, json);
+    }
+
+    @Override
     public void set(String key, String value, long expireTime, TimeUnit unit) {
         redisTemplate.opsForValue().set(key, value, expireTime, unit);
+    }
+
+    @Override
+    public <T> void set(String key, T value, long expireTime, TimeUnit unit) {
+        String json = jsonService.toJson(value);
+        this.set(key, json, expireTime, unit);
     }
 
     @Override
@@ -134,13 +155,44 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
+    public <T> Boolean setIfAbsent(String key, T value, long expireTime, TimeUnit unit) {
+        String json = jsonService.toJson(value);
+        return this.setIfAbsent(key, json, expireTime, unit);
+    }
+
+    @Override
     public String get(String key) {
         return redisTemplate.opsForValue().get(key);
     }
 
     @Override
+    public <T> T get(String key, Class<T> clazz) {
+        String json = this.get(key);
+        if (StringUtils.isBlank(json)) {
+            return null;
+        }
+        return jsonService.fromJson(json, clazz);
+    }
+
+    @Override
+    public <T> T get(String key, TypeReference<T> typeReference) {
+        String json = this.get(key);
+        if (StringUtils.isBlank(json)) {
+            return null;
+        }
+        return jsonService.fromJson(json, typeReference);
+    }
+
+    @Override
     public String getAndSet(String key, String value) {
         return redisTemplate.opsForValue().getAndSet(key, value);
+    }
+
+    @Override
+    public <T> T getAndSet(String key, T value, Class<T> clazz) {
+        String current = jsonService.toJson(value);
+        String old = this.getAndSet(key, current);
+        return jsonService.fromJson(old, clazz);
     }
 
     @Override

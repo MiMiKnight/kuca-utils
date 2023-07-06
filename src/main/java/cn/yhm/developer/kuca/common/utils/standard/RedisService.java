@@ -1,5 +1,6 @@
 package cn.yhm.developer.kuca.common.utils.standard;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.data.redis.connection.DataType;
 
 import java.time.Duration;
@@ -178,12 +179,31 @@ public interface RedisService {
     /**
      * 设置缓存
      *
+     * @param key   键
+     * @param value 值
+     * @throws Exception 异常
+     */
+    <T> void set(String key, T value) throws Exception;
+
+    /**
+     * 设置缓存
+     *
      * @param key        键
      * @param value      值
      * @param expireTime 缓存过期时间
      * @param unit       时间单位
      */
     void set(String key, String value, long expireTime, TimeUnit unit);
+
+    /**
+     * 设置缓存
+     *
+     * @param key        键
+     * @param value      值
+     * @param expireTime 缓存过期时间
+     * @param unit       时间单位
+     */
+    <T> void set(String key, T value, long expireTime, TimeUnit unit);
 
 
     /**
@@ -198,12 +218,41 @@ public interface RedisService {
     Boolean setIfAbsent(String key, String value, long expireTime, TimeUnit unit);
 
     /**
+     * key不存在时，才设置该缓存
+     *
+     * @param key        键
+     * @param value      值
+     * @param expireTime 缓存过期时间
+     * @param unit       时间单位
+     * @return {@link Boolean} 之前Key已经存在返回false,Key之前不存在返回true
+     */
+    <T> Boolean setIfAbsent(String key, T value, long expireTime, TimeUnit unit);
+
+    /**
      * 获取缓存
      *
      * @param key 键
      * @return {@link String}
      */
     String get(String key);
+
+    /**
+     * 获取缓存
+     *
+     * @param key   键
+     * @param clazz 待转换类型
+     * @return {@link T}
+     */
+    <T> T get(String key, Class<T> clazz);
+
+    /**
+     * 获取缓存
+     *
+     * @param key           键
+     * @param typeReference 待转换类型
+     * @return {@link T}
+     */
+    <T> T get(String key, TypeReference<T> typeReference);
 
     /**
      * 将给定 key 的值设为 value ，并返回 key 的旧值(old value)
@@ -213,6 +262,16 @@ public interface RedisService {
      * @return {@link String}
      */
     String getAndSet(String key, String value);
+
+    /**
+     * 将给定 key 的值设为 value ，并返回 key 的旧值(old value)
+     *
+     * @param key   键
+     * @param value 值
+     * @param clazz 待转换类型
+     * @return {@link T}
+     */
+    <T> T getAndSet(String key, T value, Class<T> clazz);
 
     /**
      * 返回key中字符串值的子字符
