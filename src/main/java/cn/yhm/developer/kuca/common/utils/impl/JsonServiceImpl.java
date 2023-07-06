@@ -1,6 +1,7 @@
 package cn.yhm.developer.kuca.common.utils.impl;
 
 import cn.yhm.developer.kuca.common.constant.DateTimeFormatStandard;
+import cn.yhm.developer.kuca.common.exception.JsonConvertException;
 import cn.yhm.developer.kuca.common.utils.standard.JsonService;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -39,7 +40,7 @@ public class JsonServiceImpl implements JsonService {
         MAPPER.setDateFormat(new SimpleDateFormat(DateTimeFormatStandard.STANDARD_4));
         //忽略 在json字符串中存在，但是在java对象中不存在对应属性的情况。防止错误
         MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        // 注册java新时间类型模块
+        // 注册java8新时间类型模块
         MAPPER.registerModule(new JavaTimeModule());
     }
 
@@ -55,10 +56,10 @@ public class JsonServiceImpl implements JsonService {
             return null;
         }
         try {
-            return object instanceof String ? (String) object : MAPPER.writeValueAsString(object);
+            return (object instanceof String) ? (String) object : MAPPER.writeValueAsString(object);
         } catch (Exception e) {
             log.warn(LogMessage.MSG_01);
-            throw new RuntimeException(e.getMessage());
+            throw new JsonConvertException(LogMessage.MSG_01, e);
         }
     }
 
@@ -68,7 +69,7 @@ public class JsonServiceImpl implements JsonService {
             return MAPPER.readValue(json, clazz);
         } catch (Exception e) {
             log.warn(LogMessage.MSG_02);
-            throw new RuntimeException(e.getMessage());
+            throw new JsonConvertException(LogMessage.MSG_02, e);
         }
     }
 
@@ -78,7 +79,7 @@ public class JsonServiceImpl implements JsonService {
             return MAPPER.readValue(json, typeReference);
         } catch (Exception e) {
             log.warn(LogMessage.MSG_02);
-            throw new RuntimeException(e.getMessage());
+            throw new JsonConvertException(LogMessage.MSG_02, e);
         }
     }
 
@@ -88,16 +89,10 @@ public class JsonServiceImpl implements JsonService {
             return MAPPER.readTree(json);
         } catch (JsonProcessingException e) {
             log.warn(LogMessage.MSG_03);
-            throw new RuntimeException(e.getMessage());
+            throw new JsonConvertException(LogMessage.MSG_03, e);
         }
     }
 
-
-    @Override
-    public JsonNode children(String json, String fieldName) {
-        JsonNode parent = readTree(json);
-        return null == parent ? null : parent.get(fieldName);
-    }
 
     @Override
     public JsonNode children(JsonNode jsonNode, String fieldName) {
@@ -105,6 +100,12 @@ public class JsonServiceImpl implements JsonService {
             return null;
         }
         return jsonNode.get(fieldName);
+    }
+
+    @Override
+    public JsonNode children(String json, String fieldName) {
+        JsonNode parent = readTree(json);
+        return children(parent, fieldName);
     }
 
 }

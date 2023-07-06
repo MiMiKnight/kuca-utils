@@ -46,15 +46,6 @@ public interface JsonService {
     JsonNode readTree(String json);
 
     /**
-     * 从JSON字符串中获取指定子元素的JsonNode对象
-     *
-     * @param json      JSON字符串
-     * @param fieldName 子元素字段名称
-     * @return {@link JsonNode}
-     */
-    JsonNode children(String json, String fieldName);
-
-    /**
      * 从JsonNode对象中获取指定子元素的JsonNode对象
      *
      * @param jsonNode  JsonNode
@@ -63,5 +54,13 @@ public interface JsonService {
      */
     JsonNode children(JsonNode jsonNode, String fieldName);
 
+    /**
+     * 从JSON字符串中获取指定子元素的JsonNode对象
+     *
+     * @param json      JSON字符串
+     * @param fieldName 子元素字段名称
+     * @return {@link JsonNode}
+     */
+    JsonNode children(String json, String fieldName);
 
 }
