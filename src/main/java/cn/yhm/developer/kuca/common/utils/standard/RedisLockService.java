@@ -74,11 +74,11 @@ public interface RedisLockService {
      * 如果业务线程终止或者睡眠则在不再续期，30秒后锁自动释放
      *
      * @param lockKey  Redis锁键
-     * @param unit     等待时间的单位
      * @param waitTime 等待获取锁的时间
+     * @param unit     等待时间的单位
      * @return boolean
      */
-    boolean tryLock(String lockKey, TimeUnit unit, long waitTime);
+    boolean tryLock(String lockKey, long waitTime, TimeUnit unit);
 
     /**
      * Redis加锁 推荐使用
@@ -102,12 +102,12 @@ public interface RedisLockService {
      * 如果获取锁成功，则返回true；如果在等待时间内未获取到锁，则返回false
      *
      * @param lockKey   Redis锁键
-     * @param unit      时间单位
      * @param waitTime  等待获取锁的时间
      * @param leaseTime 上锁后自动释放锁的时间（锁失效时间）
+     * @param unit      时间单位
      * @return boolean
      */
-    boolean tryLock(String lockKey, TimeUnit unit, long waitTime, long leaseTime);
+    boolean tryLock(String lockKey, long waitTime, long leaseTime, TimeUnit unit);
 
     /**
      * Redis加锁
