@@ -1,7 +1,7 @@
-cn.yhm.developer.kuca.common.config.RestTemplateConfig
-cn.yhm.developer.kuca.common.utils.impl.DateTimeServiceImpl
-cn.yhm.developer.kuca.common.utils.impl.JsonServiceImpl
-cn.yhm.developer.kuca.common.utils.impl.RedisServiceImpl
-cn.yhm.developer.kuca.common.utils.impl.RedisLockServiceImpl
-cn.yhm.developer.kuca.common.utils.impl.ThreadServiceImpl
-cn.yhm.developer.kuca.common.utils.impl.HttpServiceImpl
+com.github.mimiknight.kuca.common.config.RestTemplateConfig
+com.github.mimiknight.kuca.common.utils.impl.DateTimeServiceImpl
+com.github.mimiknight.kuca.common.utils.impl.JsonServiceImpl
+com.github.mimiknight.kuca.common.utils.impl.RedisServiceImpl
+com.github.mimiknight.kuca.common.utils.impl.RedisLockServiceImpl
+com.github.mimiknight.kuca.common.utils.impl.ThreadServiceImpl
+com.github.mimiknight.kuca.common.utils.impl.HttpServiceImpl
