@@ -181,9 +181,8 @@ public interface RedisService {
      *
      * @param key   键
      * @param value 值
-     * @throws Exception 异常
      */
-    <T> void set(String key, T value) throws Exception;
+    <T> void set(String key, T value);
 
     /**
      * 设置缓存

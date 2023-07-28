@@ -28,8 +28,6 @@ public interface RedisLockService {
      * Redis加锁
      * <p>
      * 获取不到锁则一直等待，直至锁被释放
-     * <p>
-     * 默认锁释放时间单位：秒
      *
      * @param lockKey   Redis锁键
      * @param leaseTime 上锁后自动释放锁的时间
