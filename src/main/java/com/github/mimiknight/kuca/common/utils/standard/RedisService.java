@@ -238,11 +238,11 @@ public interface RedisService {
     /**
      * 获取缓存
      *
-     * @param key   键
-     * @param clazz 待转换类型
+     * @param key         键
+     * @param returnClass 返回值Class类型
      * @return {@link T}
      */
-    <T> T get(String key, Class<T> clazz);
+    <T> T get(String key, Class<T> returnClass);
 
     /**
      * 获取缓存
@@ -265,12 +265,12 @@ public interface RedisService {
     /**
      * 将给定 key 的值设为 value ，并返回 key 的旧值(old value)
      *
-     * @param key   键
-     * @param value 值
-     * @param clazz 待转换类型
+     * @param key         键
+     * @param value       值
+     * @param returnClass 返回值Class类型
      * @return {@link T}
      */
-    <T> T getAndSet(String key, T value, Class<T> clazz);
+    <T> T getAndSet(String key, T value, Class<T> returnClass);
 
     /**
      * 返回key中字符串值的子字符

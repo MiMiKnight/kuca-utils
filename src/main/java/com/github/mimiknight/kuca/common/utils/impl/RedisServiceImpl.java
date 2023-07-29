@@ -1,8 +1,8 @@
 package com.github.mimiknight.kuca.common.utils.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.mimiknight.kuca.common.utils.standard.JsonService;
 import com.github.mimiknight.kuca.common.utils.standard.RedisService;
-import com.fasterxml.jackson.core.type.TypeReference;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.DataType;
@@ -166,12 +166,12 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public <T> T get(String key, Class<T> clazz) {
+    public <T> T get(String key, Class<T> returnClass) {
         String json = this.get(key);
         if (StringUtils.isBlank(json)) {
             return null;
         }
-        return jsonService.fromJson(json, clazz);
+        return jsonService.fromJson(json, returnClass);
     }
 
     @Override
@@ -189,10 +189,10 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public <T> T getAndSet(String key, T value, Class<T> clazz) {
+    public <T> T getAndSet(String key, T value, Class<T> returnClass) {
         String current = jsonService.toJson(value);
         String old = this.getAndSet(key, current);
-        return jsonService.fromJson(old, clazz);
+        return jsonService.fromJson(old, returnClass);
     }
 
     @Override
