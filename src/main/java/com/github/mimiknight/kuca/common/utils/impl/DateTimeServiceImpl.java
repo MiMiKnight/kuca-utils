@@ -2,6 +2,7 @@ package com.github.mimiknight.kuca.common.utils.impl;
 
 import com.github.mimiknight.kuca.common.constant.DateTimeFormatStandard;
 import com.github.mimiknight.kuca.common.constant.TimeZoneGMT;
+import com.github.mimiknight.kuca.common.exception.DateConvertException;
 import com.github.mimiknight.kuca.common.utils.standard.DateTimeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -53,8 +54,8 @@ public class DateTimeServiceImpl implements DateTimeService {
             return dateFormat.parse(date);
 
         } catch (ParseException e) {
-            log.error("Failed to convert string to date.");
-            throw new RuntimeException(e.getMessage());
+            log.error("Failed to convert date string to Date object.");
+            throw new DateConvertException("Failed to convert date string to Date object",e);
         }
     }
 
