@@ -40,7 +40,7 @@ public class DateTimeServiceImpl implements DateTimeService {
 
     @Override
     public ZonedDateTime toZonedDateTime(String date) {
-        return toZonedDateTime(date, DateTimeFormatStandard.STANDARD_4, Locale.ENGLISH);
+        return toZonedDateTime(date, DateTimeFormatStandard.STANDARD_6, Locale.ENGLISH);
     }
 
     @Override

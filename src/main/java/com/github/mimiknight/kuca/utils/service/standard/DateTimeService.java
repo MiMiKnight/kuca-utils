@@ -40,9 +40,15 @@ public interface DateTimeService {
      * <p>
      * 默认语言环境：English
      * <p>
-     * 默认字符串日期格式：yyyy-MM-dd HH:mm:ss.SSS z
+     * 默认字符串日期格式：yyyy-MM-dd HH:mm:ss.SSS XXX
      * <p>
-     * 2022-09-04 10:06:39.123 GMT+08:00 【表示 东八区 2022年9月4日10点6分39秒123毫秒】
+     * 案例：
+     * <p>
+     * 2022-09-04 10:06:39.123 +08:00 【表示 东八区 2022年9月4日10点06分39秒123毫秒】
+     * <p>
+     * 2022-09-04 10:06:39.123 Z      【表示 零时区 2022年9月4日10点06分39秒123毫秒】
+     * <p>
+     * 2022-09-04 10:06:39.123 -06:00 【表示 西六区 2022年9月4日10点06分39秒123毫秒】
      *
      * @param date 日期字符串
      * @return {@link ZonedDateTime}
@@ -105,7 +111,7 @@ public interface DateTimeService {
      * <p>
      * 默认format：yyyy-MM-dd HH:mm:ss
      * <p>
-     * 默认时区：GMT+00:00
+     * 默认时区：GMT（零时区）
      *
      * @param date 日期字符串
      * @return {@link Date}
