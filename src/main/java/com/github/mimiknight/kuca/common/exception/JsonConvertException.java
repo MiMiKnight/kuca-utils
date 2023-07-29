@@ -1,7 +1,7 @@
 package com.github.mimiknight.kuca.common.exception;
 
 /**
- * JSON转换异常
+ * JSON转换异常类
  *
  * @author victor2015yhm@gmail.com
  * @since 2023-07-06 10:53:22

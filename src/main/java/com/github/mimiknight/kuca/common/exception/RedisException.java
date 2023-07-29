@@ -1,7 +1,7 @@
 package com.github.mimiknight.kuca.common.exception;
 
 /**
- * Redis故障异常
+ * Redis异常类
  *
  * @author victor2015yhm@gmail.com
  * @since 2023-06-03 11:32:04
