@@ -1,7 +1,7 @@
-com.github.mimiknight.kuca.common.config.RestTemplateConfig
-com.github.mimiknight.kuca.common.utils.impl.DateTimeServiceImpl
-com.github.mimiknight.kuca.common.utils.impl.JsonServiceImpl
-com.github.mimiknight.kuca.common.utils.impl.RedisServiceImpl
-com.github.mimiknight.kuca.common.utils.impl.RedisLockServiceImpl
-com.github.mimiknight.kuca.common.utils.impl.ThreadServiceImpl
-com.github.mimiknight.kuca.common.utils.impl.HttpServiceImpl
+com.github.mimiknight.kuca.utils.config.RestTemplateConfig
+com.github.mimiknight.kuca.utils.service.impl.DateTimeServiceImpl
+com.github.mimiknight.kuca.utils.service.impl.JsonServiceImpl
+com.github.mimiknight.kuca.utils.service.impl.RedisServiceImpl
+com.github.mimiknight.kuca.utils.service.impl.RedisLockServiceImpl
+com.github.mimiknight.kuca.utils.service.impl.ThreadServiceImpl
+com.github.mimiknight.kuca.utils.service.impl.HttpServiceImpl

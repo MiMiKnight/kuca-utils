@@ -13,11 +13,11 @@
     </parent>
 
     <!--本工程-->
-    <artifactId>kuca-common-spring-boot-starter</artifactId>
+    <artifactId>kuca-utils-spring-boot-starter</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>Kuca Common</name>
-    <description>Kuca Common 项目</description>
+    <name>Kuca Utils</name>
+    <description>Kuca Utils 项目</description>
 
     <!--版本管理-->
     <properties>
