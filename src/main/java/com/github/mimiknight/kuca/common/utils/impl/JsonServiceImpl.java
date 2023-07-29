@@ -1,8 +1,5 @@
 package com.github.mimiknight.kuca.common.utils.impl;
 
-import com.github.mimiknight.kuca.common.constant.DateTimeFormatStandard;
-import com.github.mimiknight.kuca.common.exception.JsonConvertException;
-import com.github.mimiknight.kuca.common.utils.standard.JsonService;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -11,6 +8,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.github.mimiknight.kuca.common.constant.DateTimeFormatStandard;
+import com.github.mimiknight.kuca.common.exception.JsonConvertException;
+import com.github.mimiknight.kuca.common.utils.standard.JsonService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -58,7 +58,7 @@ public class JsonServiceImpl implements JsonService {
         try {
             return (object instanceof String) ? (String) object : MAPPER.writeValueAsString(object);
         } catch (Exception e) {
-            log.warn(LogMessage.MSG_01);
+            log.error(LogMessage.MSG_01);
             throw new JsonConvertException(LogMessage.MSG_01, e);
         }
     }
@@ -68,7 +68,7 @@ public class JsonServiceImpl implements JsonService {
         try {
             return MAPPER.readValue(json, clazz);
         } catch (Exception e) {
-            log.warn(LogMessage.MSG_02);
+            log.error(LogMessage.MSG_02);
             throw new JsonConvertException(LogMessage.MSG_02, e);
         }
     }
@@ -78,7 +78,7 @@ public class JsonServiceImpl implements JsonService {
         try {
             return MAPPER.readValue(json, typeReference);
         } catch (Exception e) {
-            log.warn(LogMessage.MSG_02);
+            log.error(LogMessage.MSG_02);
             throw new JsonConvertException(LogMessage.MSG_02, e);
         }
     }
@@ -88,7 +88,7 @@ public class JsonServiceImpl implements JsonService {
         try {
             return MAPPER.readTree(json);
         } catch (JsonProcessingException e) {
-            log.warn(LogMessage.MSG_03);
+            log.error(LogMessage.MSG_03);
             throw new JsonConvertException(LogMessage.MSG_03, e);
         }
     }
