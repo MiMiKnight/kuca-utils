@@ -26,56 +26,24 @@ public class RedisLockServiceImpl implements RedisLockService {
         this.redissonClient = redissonClient;
     }
 
-
-    interface LocalConstant {
-        String LOG_MSG_001 = "Redis exception,error = {}";
+    @Override
+    public void lock(String lockKey, long leaseTime, TimeUnit unit) {
+        redissonClient.getLock(lockKey).lock(leaseTime, unit);
     }
 
     @Override
-    public boolean lock(String lockKey, TimeUnit unit, long leaseTime) {
-        try {
-            RLock lock = redissonClient.getLock(lockKey);
-            lock.lock(leaseTime, unit);
-            return true;
-        } catch (Exception e) {
-            log.error(LocalConstant.LOG_MSG_001, e.getMessage());
-            return false;
-        }
+    public void lock(String lockKey, long leaseTime) {
+        redissonClient.getLock(lockKey).lock(leaseTime, TimeUnit.SECONDS);
     }
 
     @Override
-    public boolean lock(String lockKey, long leaseTime) {
-        try {
-            RLock lock = redissonClient.getLock(lockKey);
-            lock.lock(leaseTime, TimeUnit.SECONDS);
-            return true;
-        } catch (Exception e) {
-            log.error(LocalConstant.LOG_MSG_001, e.getMessage());
-            return false;
-        }
-    }
-
-    @Override
-    public boolean lock(String lockKey) {
-        try {
-            RLock lock = redissonClient.getLock(lockKey);
-            lock.lock();
-            return true;
-        } catch (Exception e) {
-            log.error(LocalConstant.LOG_MSG_001, e.getMessage());
-            return false;
-        }
+    public void lock(String lockKey) {
+        redissonClient.getLock(lockKey).lock();
     }
 
     @Override
     public boolean tryLock(String lockKey) {
-        try {
-            RLock lock = redissonClient.getLock(lockKey);
-            return lock.tryLock();
-        } catch (Exception e) {
-            log.error(LocalConstant.LOG_MSG_001, e.getMessage());
-            return false;
-        }
+        return redissonClient.getLock(lockKey).tryLock();
     }
 
     @Override
@@ -84,11 +52,8 @@ public class RedisLockServiceImpl implements RedisLockService {
             RLock lock = redissonClient.getLock(lockKey);
             return lock.tryLock(waitTime, unit);
         } catch (InterruptedException e) {
-            log.error(LocalConstant.LOG_MSG_001, e.getMessage());
+            log.error("Redis interrupted exception,error = {}", e.getMessage());
             Thread.currentThread().interrupt();
-            return false;
-        } catch (Exception e) {
-            log.error(LocalConstant.LOG_MSG_001, e.getMessage());
             return false;
         }
     }
@@ -107,9 +72,6 @@ public class RedisLockServiceImpl implements RedisLockService {
             log.error("Redis interrupted exception,error = {}", e.getMessage());
             Thread.currentThread().interrupt();
             return false;
-        } catch (Exception e) {
-            log.error(LocalConstant.LOG_MSG_001, e.getMessage());
-            return false;
         }
     }
 
@@ -119,27 +81,16 @@ public class RedisLockServiceImpl implements RedisLockService {
     }
 
     @Override
-    public void unlock(String lockKey) {
-        try {
-            RLock lock = redissonClient.getLock(lockKey);
-            if (!lock.isLocked()) {
-                return;
-            }
-            lock.unlock();
-        } catch (Exception e) {
-            log.error("Redis unlock failed, error = {}", e.getMessage());
+    public void unlock(RLock lock) {
+        if (null == lock || !lock.isLocked()) {
+            return;
         }
+        lock.unlock();
     }
 
     @Override
-    public void unlock(RLock lock) {
-        try {
-            if (!lock.isLocked()) {
-                return;
-            }
-            lock.unlock();
-        } catch (Exception e) {
-            log.error("Redis unlock failed, error = {}", e.getMessage());
-        }
+    public void unlock(String lockKey) {
+        RLock lock = redissonClient.getLock(lockKey);
+        unlock(lock);
     }
 }

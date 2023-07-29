@@ -18,11 +18,10 @@ public interface RedisLockService {
      * 获取不到锁则一直等待，直至锁被释放
      *
      * @param lockKey   Redis锁键
-     * @param unit      锁释放时间的单位
      * @param leaseTime 上锁后自动释放锁的时间（锁失效时间）
-     * @return {@link RLock}
+     * @param unit      锁释放时间的单位
      */
-    boolean lock(String lockKey, TimeUnit unit, long leaseTime);
+    void lock(String lockKey, long leaseTime, TimeUnit unit);
 
     /**
      * Redis加锁
@@ -31,9 +30,8 @@ public interface RedisLockService {
      *
      * @param lockKey   Redis锁键
      * @param leaseTime 上锁后自动释放锁的时间
-     * @return {@link RLock}
      */
-    boolean lock(String lockKey, long leaseTime);
+    void lock(String lockKey, long leaseTime);
 
     /**
      * Redis加锁
@@ -44,9 +42,8 @@ public interface RedisLockService {
      * 如果业务线程终止或者睡眠则在不再续期，30秒后锁自动释放
      *
      * @param lockKey Redis锁键
-     * @return {@link RLock}
      */
-    boolean lock(String lockKey);
+    void lock(String lockKey);
 
     /**
      * Redis加锁
@@ -126,16 +123,16 @@ public interface RedisLockService {
      * <p>
      * 若没用锁情况下，就不调用释放锁的代码，若有锁情况下才调用释放锁
      *
-     * @param lockKey Redis锁键
+     * @param lock Redis锁对象
      */
-    void unlock(String lockKey);
+    void unlock(RLock lock);
 
     /**
      * 释放锁
      * <p>
      * 若没用锁情况下，就不调用释放锁的代码，若有锁情况下才调用释放锁
      *
-     * @param lock Redis锁对象
+     * @param lockKey Redis锁键
      */
-    void unlock(RLock lock);
+    void unlock(String lockKey);
 }
