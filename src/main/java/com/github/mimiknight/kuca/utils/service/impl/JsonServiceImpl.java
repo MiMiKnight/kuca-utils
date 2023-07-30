@@ -27,7 +27,7 @@ import java.text.SimpleDateFormat;
 @Component
 public class JsonServiceImpl implements JsonService {
 
-    private final static ObjectMapper MAPPER = new ObjectMapper();
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     static {
         //对象的所有字段全部列入
@@ -37,7 +37,7 @@ public class JsonServiceImpl implements JsonService {
         //忽略空Bean转json的错误
         MAPPER.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         //所有的日期格式都统一为以下的样式，即yyyy-MM-dd HH:mm:ss.SSS XXX
-        MAPPER.setDateFormat(new SimpleDateFormat(DateTimeFormatStandard.STANDARD_4));
+        MAPPER.setDateFormat(new SimpleDateFormat(DateTimeFormatStandard.STANDARD_6));
         //忽略 在json字符串中存在，但是在java对象中不存在对应属性的情况。防止错误
         MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         // 注册java8新时间类型模块
@@ -57,7 +57,7 @@ public class JsonServiceImpl implements JsonService {
         }
         try {
             return (object instanceof String) ? (String) object : MAPPER.writeValueAsString(object);
-        } catch (Exception e) {
+        } catch (JsonProcessingException e) {
             log.error(LogMessage.MSG_01);
             throw new JsonConvertException(LogMessage.MSG_01, e);
         }
@@ -67,7 +67,7 @@ public class JsonServiceImpl implements JsonService {
     public <T> T fromJson(String json, Class<T> clazz) {
         try {
             return MAPPER.readValue(json, clazz);
-        } catch (Exception e) {
+        } catch (JsonProcessingException e) {
             log.error(LogMessage.MSG_02);
             throw new JsonConvertException(LogMessage.MSG_02, e);
         }
@@ -77,7 +77,7 @@ public class JsonServiceImpl implements JsonService {
     public <T> T fromJson(String json, TypeReference<T> typeReference) {
         try {
             return MAPPER.readValue(json, typeReference);
-        } catch (Exception e) {
+        } catch (JsonProcessingException e) {
             log.error(LogMessage.MSG_02);
             throw new JsonConvertException(LogMessage.MSG_02, e);
         }
