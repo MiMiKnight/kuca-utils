@@ -30,7 +30,7 @@ public class OkHttpProperties {
     /**
      * 连接持续时间单位
      */
-    private final TimeUnit keepAliveDurationTimeUnit = TimeUnit.MILLISECONDS;
+    private TimeUnit keepAliveDurationTimeUnit = TimeUnit.MILLISECONDS;
 
     /**
      * 连接超时时间
@@ -40,7 +40,7 @@ public class OkHttpProperties {
     /**
      * 连接超时时间单位
      */
-    private final TimeUnit connectTimeoutTimeUnit = TimeUnit.MILLISECONDS;
+    private TimeUnit connectTimeoutTimeUnit = TimeUnit.MILLISECONDS;
 
     /**
      * 写超时时间
@@ -50,7 +50,7 @@ public class OkHttpProperties {
     /**
      * 写超时时间单位
      */
-    private final TimeUnit writeTimeoutTimeUnit = TimeUnit.MILLISECONDS;
+    private TimeUnit writeTimeoutTimeUnit = TimeUnit.MILLISECONDS;
 
     /**
      * 读超时时间
@@ -60,7 +60,7 @@ public class OkHttpProperties {
     /**
      * 读超时时间单位
      */
-    private final TimeUnit readTimeoutTimeUnit = TimeUnit.MILLISECONDS;
+    private TimeUnit readTimeoutTimeUnit = TimeUnit.MILLISECONDS;
 
     /**
      * 调用超时时间
@@ -70,7 +70,7 @@ public class OkHttpProperties {
     /**
      * 调用超时时间单位
      */
-    private final TimeUnit callTimeoutTimeUnit = TimeUnit.MILLISECONDS;
+    private TimeUnit callTimeoutTimeUnit = TimeUnit.MILLISECONDS;
 
     /**
      * 核心线程数
