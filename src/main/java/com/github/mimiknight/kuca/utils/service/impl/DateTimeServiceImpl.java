@@ -5,7 +5,6 @@ import com.github.mimiknight.kuca.utils.constant.TimeZoneGMT;
 import com.github.mimiknight.kuca.utils.exception.DateConvertException;
 import com.github.mimiknight.kuca.utils.service.standard.DateTimeService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,7 +23,6 @@ import java.util.TimeZone;
  * @since 2023-05-07 08:56:34
  */
 @Slf4j
-@Component
 public class DateTimeServiceImpl implements DateTimeService {
 
     @Override
@@ -55,7 +53,7 @@ public class DateTimeServiceImpl implements DateTimeService {
 
         } catch (ParseException e) {
             log.error("Failed to convert date string to Date object.");
-            throw new DateConvertException("Failed to convert date string to Date object",e);
+            throw new DateConvertException("Failed to convert date string to Date object", e);
         }
     }
 

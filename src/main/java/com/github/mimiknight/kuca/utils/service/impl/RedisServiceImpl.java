@@ -7,7 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -25,7 +24,6 @@ import java.util.concurrent.TimeUnit;
  * @author victor2015yhm@gmail.com
  * @since 2023-05-06 22:09:53
  */
-@Component
 public class RedisServiceImpl implements RedisService {
 
     private StringRedisTemplate redisTemplate;

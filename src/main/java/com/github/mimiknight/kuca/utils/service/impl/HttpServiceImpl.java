@@ -7,7 +7,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -20,7 +19,6 @@ import java.util.HashMap;
  * @author victor2015yhm@gmail.com
  * @since 2023-05-07 18:04:12
  */
-@Component
 public class HttpServiceImpl implements HttpService {
 
     private RestTemplate restTemplate;

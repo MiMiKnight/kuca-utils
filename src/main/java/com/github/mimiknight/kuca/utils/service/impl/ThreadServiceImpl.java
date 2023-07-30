@@ -12,7 +12,6 @@ import java.util.concurrent.Executor;
  * @author victor2015yhm@gmail.com
  * @since 2023-05-07 17:43:33
  */
-@Component
 public class ThreadServiceImpl implements ThreadService {
     private Executor executor;
 

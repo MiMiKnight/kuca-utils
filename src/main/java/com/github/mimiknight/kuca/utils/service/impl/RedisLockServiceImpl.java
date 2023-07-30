@@ -16,7 +16,6 @@ import java.util.concurrent.TimeUnit;
  * @since 2023-05-09 22:20:47
  */
 @Slf4j
-@Component
 public class RedisLockServiceImpl implements RedisLockService {
 
     private RedissonClient redissonClient;
