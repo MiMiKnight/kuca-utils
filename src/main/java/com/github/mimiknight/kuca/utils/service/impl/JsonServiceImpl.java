@@ -9,7 +9,6 @@ import com.github.mimiknight.kuca.utils.service.standard.JsonService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  * JSON工具类
@@ -19,19 +18,8 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 public class JsonServiceImpl implements JsonService {
-
-    private ObjectMapper objectMapper;
-
     @Autowired
-    public void setObjectMapper(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
-
-    interface LogMessage {
-        String MSG_01 = "Object convert to JSON Failed.";
-        String MSG_02 = "JSON convert to object Failed.";
-        String MSG_03 = "JSON convert to JsonNode Failed.";
-    }
+    private ObjectMapper mapper;
 
     @Override
     public String toJson(Object object) {
@@ -39,40 +27,40 @@ public class JsonServiceImpl implements JsonService {
             return null;
         }
         try {
-            return (object instanceof String) ? (String) object : objectMapper.writeValueAsString(object);
+            return (object instanceof String) ? (String) object : mapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
-            log.error(LogMessage.MSG_01);
-            throw new JsonConvertException(LogMessage.MSG_01, e);
+            log.error("Object convert to JSON Failed.");
+            throw new JsonConvertException("Object convert to JSON Failed.", e);
         }
     }
 
     @Override
     public <T> T fromJson(String json, Class<T> clazz) {
         try {
-            return objectMapper.readValue(json, clazz);
+            return mapper.readValue(json, clazz);
         } catch (JsonProcessingException e) {
-            log.error(LogMessage.MSG_02);
-            throw new JsonConvertException(LogMessage.MSG_02, e);
+            log.error("JSON convert to object Failed.");
+            throw new JsonConvertException("JSON convert to object Failed.", e);
         }
     }
 
     @Override
     public <T> T fromJson(String json, TypeReference<T> typeReference) {
         try {
-            return objectMapper.readValue(json, typeReference);
+            return mapper.readValue(json, typeReference);
         } catch (JsonProcessingException e) {
-            log.error(LogMessage.MSG_02);
-            throw new JsonConvertException(LogMessage.MSG_02, e);
+            log.error("JSON convert to object Failed.");
+            throw new JsonConvertException("JSON convert to object Failed.", e);
         }
     }
 
     @Override
     public JsonNode readTree(String json) {
         try {
-            return objectMapper.readTree(json);
+            return mapper.readTree(json);
         } catch (JsonProcessingException e) {
-            log.error(LogMessage.MSG_03);
-            throw new JsonConvertException(LogMessage.MSG_03, e);
+            log.error("JSON convert to JsonNode Failed.");
+            throw new JsonConvertException("JSON convert to JsonNode Failed.", e);
         }
     }
 

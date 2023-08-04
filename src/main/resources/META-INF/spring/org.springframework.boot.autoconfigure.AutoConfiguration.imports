@@ -5,3 +5,6 @@ com.github.mimiknight.kuca.utils.service.impl.RedisServiceImpl
 com.github.mimiknight.kuca.utils.service.impl.RedisLockServiceImpl
 com.github.mimiknight.kuca.utils.service.impl.ThreadServiceImpl
 com.github.mimiknight.kuca.utils.service.impl.HttpServiceImpl
+com.github.mimiknight.kuca.utils.service.utils.DateTimeUtils
+com.github.mimiknight.kuca.utils.service.utils.JsonUtils
+com.github.mimiknight.kuca.utils.service.utils.LockUtils

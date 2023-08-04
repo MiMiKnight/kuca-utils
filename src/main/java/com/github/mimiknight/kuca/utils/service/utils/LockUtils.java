@@ -1,16 +1,33 @@
-package com.github.mimiknight.kuca.utils.service.standard;
+package com.github.mimiknight.kuca.utils.service.utils;
 
+import com.github.mimiknight.kuca.utils.service.standard.RedisLockService;
 import org.redisson.api.RLock;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Redisson分布式锁工具类接口
+ * 锁工具类
  *
- * @author victor2015yhm@gmail.com
- * @since 2023-05-09 22:21:01
+ * @author MiMiKnight victor2015yhm@gmail.com
+ * @since 2023-08-04 19:54:39
  */
-public interface RedisLockService {
+public class LockUtils {
+
+    @Autowired
+    private RedisLockService lockService;
+
+    private static LockUtils instance;
+
+    private LockUtils() {
+    }
+
+    @PostConstruct
+    public void init() {
+        instance = this;
+        instance.lockService = this.lockService;
+    }
 
     /**
      * Redis加锁
@@ -21,7 +38,9 @@ public interface RedisLockService {
      * @param leaseTime 上锁后自动释放锁的时间（锁失效时间）
      * @param unit      锁释放时间的单位
      */
-    void lock(String key, long leaseTime, TimeUnit unit);
+    public static void lock(String key, long leaseTime, TimeUnit unit) {
+        instance.lockService.lock(key, leaseTime, unit);
+    }
 
     /**
      * Redis加锁
@@ -31,7 +50,9 @@ public interface RedisLockService {
      * @param key       Redis锁键
      * @param leaseTime 上锁后自动释放锁的时间
      */
-    void lock(String key, long leaseTime);
+    public static void lock(String key, long leaseTime) {
+        instance.lockService.lock(key, leaseTime);
+    }
 
     /**
      * Redis加锁
@@ -43,7 +64,9 @@ public interface RedisLockService {
      *
      * @param key Redis锁键
      */
-    void lock(String key);
+    public void lock(String key) {
+        instance.lockService.lock(key);
+    }
 
     /**
      * Redis加锁
@@ -58,7 +81,9 @@ public interface RedisLockService {
      * @param key Redis锁键
      * @return boolean
      */
-    boolean tryLock(String key);
+    public static boolean tryLock(String key) {
+        return instance.lockService.tryLock(key);
+    }
 
     /**
      * Redis加锁
@@ -73,7 +98,9 @@ public interface RedisLockService {
      * @param unit     等待时间的单位
      * @return boolean
      */
-    boolean tryLock(String key, long waitTime, TimeUnit unit);
+    public static boolean tryLock(String key, long waitTime, TimeUnit unit) {
+        return instance.lockService.tryLock(key, waitTime, unit);
+    }
 
     /**
      * Redis加锁 推荐使用
@@ -89,7 +116,9 @@ public interface RedisLockService {
      * @param waitTime 等待获取锁的时间
      * @return boolean
      */
-    boolean tryLock(String key, long waitTime);
+    public static boolean tryLock(String key, long waitTime) {
+        return instance.lockService.tryLock(key, waitTime);
+    }
 
     /**
      * Redis加锁
@@ -102,7 +131,9 @@ public interface RedisLockService {
      * @param unit      时间单位
      * @return boolean
      */
-    boolean tryLock(String key, long waitTime, long leaseTime, TimeUnit unit);
+    public static boolean tryLock(String key, long waitTime, long leaseTime, TimeUnit unit) {
+        return instance.lockService.tryLock(key, waitTime, leaseTime, unit);
+    }
 
     /**
      * Redis加锁
@@ -116,7 +147,9 @@ public interface RedisLockService {
      * @param leaseTime 上锁后自动释放锁的时间（锁失效时间）
      * @return boolean
      */
-    boolean tryLock(String key, long waitTime, long leaseTime);
+    public static boolean tryLock(String key, long waitTime, long leaseTime) {
+        return instance.lockService.tryLock(key, waitTime, leaseTime);
+    }
 
     /**
      * 释放锁
@@ -125,7 +158,9 @@ public interface RedisLockService {
      *
      * @param lock Redis锁对象
      */
-    void unlock(RLock lock);
+    public static void unlock(RLock lock) {
+        instance.lockService.unlock(lock);
+    }
 
     /**
      * 释放锁
@@ -134,5 +169,7 @@ public interface RedisLockService {
      *
      * @param key Redis锁键
      */
-    void unlock(String key);
+    public static void unlock(String key) {
+        instance.lockService.unlock(key);
+    }
 }

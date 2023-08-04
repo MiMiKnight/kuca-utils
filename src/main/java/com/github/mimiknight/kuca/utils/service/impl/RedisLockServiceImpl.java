@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,38 +16,33 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public class RedisLockServiceImpl implements RedisLockService {
-
+    @Autowired
     private RedissonClient redissonClient;
 
-    @Autowired
-    public void setRedissonClient(RedissonClient redissonClient) {
-        this.redissonClient = redissonClient;
+    @Override
+    public void lock(String key, long leaseTime, TimeUnit unit) {
+        redissonClient.getLock(key).lock(leaseTime, unit);
     }
 
     @Override
-    public void lock(String lockKey, long leaseTime, TimeUnit unit) {
-        redissonClient.getLock(lockKey).lock(leaseTime, unit);
+    public void lock(String key, long leaseTime) {
+        redissonClient.getLock(key).lock(leaseTime, TimeUnit.SECONDS);
     }
 
     @Override
-    public void lock(String lockKey, long leaseTime) {
-        redissonClient.getLock(lockKey).lock(leaseTime, TimeUnit.SECONDS);
+    public void lock(String key) {
+        redissonClient.getLock(key).lock();
     }
 
     @Override
-    public void lock(String lockKey) {
-        redissonClient.getLock(lockKey).lock();
+    public boolean tryLock(String key) {
+        return redissonClient.getLock(key).tryLock();
     }
 
     @Override
-    public boolean tryLock(String lockKey) {
-        return redissonClient.getLock(lockKey).tryLock();
-    }
-
-    @Override
-    public boolean tryLock(String lockKey, long waitTime, TimeUnit unit) {
+    public boolean tryLock(String key, long waitTime, TimeUnit unit) {
         try {
-            RLock lock = redissonClient.getLock(lockKey);
+            RLock lock = redissonClient.getLock(key);
             return lock.tryLock(waitTime, unit);
         } catch (InterruptedException e) {
             log.error("Redis interrupted exception,error = {}", e.getMessage());
@@ -58,14 +52,14 @@ public class RedisLockServiceImpl implements RedisLockService {
     }
 
     @Override
-    public boolean tryLock(String lockKey, long waitTime) {
-        return tryLock(lockKey, waitTime, TimeUnit.SECONDS);
+    public boolean tryLock(String key, long waitTime) {
+        return tryLock(key, waitTime, TimeUnit.SECONDS);
     }
 
     @Override
-    public boolean tryLock(String lockKey, long waitTime, long leaseTime, TimeUnit unit) {
+    public boolean tryLock(String key, long waitTime, long leaseTime, TimeUnit unit) {
         try {
-            RLock lock = redissonClient.getLock(lockKey);
+            RLock lock = redissonClient.getLock(key);
             return lock.tryLock(waitTime, leaseTime, unit);
         } catch (InterruptedException e) {
             log.error("Redis interrupted exception,error = {}", e.getMessage());
@@ -75,8 +69,8 @@ public class RedisLockServiceImpl implements RedisLockService {
     }
 
     @Override
-    public boolean tryLock(String lockKey, long waitTime, long leaseTime) {
-        return tryLock(lockKey, waitTime, leaseTime, TimeUnit.SECONDS);
+    public boolean tryLock(String key, long waitTime, long leaseTime) {
+        return tryLock(key, waitTime, leaseTime, TimeUnit.SECONDS);
     }
 
     @Override
@@ -88,8 +82,8 @@ public class RedisLockServiceImpl implements RedisLockService {
     }
 
     @Override
-    public void unlock(String lockKey) {
-        RLock lock = redissonClient.getLock(lockKey);
+    public void unlock(String key) {
+        RLock lock = redissonClient.getLock(key);
         unlock(lock);
     }
 }
