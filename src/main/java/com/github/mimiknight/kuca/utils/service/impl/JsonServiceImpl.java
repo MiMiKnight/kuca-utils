@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.mimiknight.kuca.utils.exception.JsonConvertException;
 import com.github.mimiknight.kuca.utils.service.standard.JsonService;
 import lombok.extern.slf4j.Slf4j;
@@ -77,6 +78,11 @@ public class JsonServiceImpl implements JsonService {
     public JsonNode children(String json, String fieldName) {
         JsonNode parent = readTree(json);
         return children(parent, fieldName);
+    }
+
+    @Override
+    public ObjectNode createObjectNode() {
+        return mapper.createObjectNode();
     }
 
 }

@@ -2,6 +2,7 @@ package com.github.mimiknight.kuca.utils.service.standard;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * JSON工具类接口
@@ -62,5 +63,12 @@ public interface JsonService {
      * @return {@link JsonNode}
      */
     JsonNode children(String json, String fieldName);
+
+    /**
+     * 创建对象节点
+     *
+     * @return {@link ObjectNode}
+     */
+    ObjectNode createObjectNode();
 
 }
