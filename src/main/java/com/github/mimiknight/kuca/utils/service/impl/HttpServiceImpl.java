@@ -1,6 +1,7 @@
 package com.github.mimiknight.kuca.utils.service.impl;
 
 import com.github.mimiknight.kuca.utils.service.standard.HttpService;
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -11,7 +12,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * HTTP工具实现类
@@ -20,14 +21,8 @@ import java.util.HashMap;
  * @since 2023-05-07 18:04:12
  */
 public class HttpServiceImpl implements HttpService {
-
-    private RestTemplate restTemplate;
-
     @Autowired
-    public void setRestTemplate(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
-
+    private RestTemplate restTemplate;
 
     @Override
     public HttpHeaders emptyHttpHeaders() {
@@ -35,9 +30,16 @@ public class HttpServiceImpl implements HttpService {
     }
 
     @Override
-    public String uriBuild(String uri, HashMap<String, Object> params) {
+    public HttpHeaders jsonHttpHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        return headers;
+    }
+
+    @Override
+    public String uriBuild(String uri, Map<String, Object> params) {
         Assert.notNull(uri, "uri can not be null");
-        if (null == params || params.size() < 1) {
+        if (MapUtils.isEmpty(params)) {
             return uri;
         }
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromPath(uri);
@@ -48,7 +50,6 @@ public class HttpServiceImpl implements HttpService {
     @Override
     public ResponseEntity<String> doHttp(String apiDomain, String apiPath, HttpMethod method, HttpHeaders headers) {
         String uri = apiDomain + apiPath;
-        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         HttpEntity<Object> httpEntity = new HttpEntity<>(headers);
         return restTemplate.exchange(uri, method, httpEntity, String.class);
     }
@@ -57,7 +58,6 @@ public class HttpServiceImpl implements HttpService {
     public <T> ResponseEntity<String> doHttp(String apiDomain, String apiPath, HttpMethod method, HttpHeaders headers,
                                              T body) {
         String uri = apiDomain + apiPath;
-        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         HttpEntity<T> httpEntity = new HttpEntity<>(body, headers);
         return restTemplate.exchange(uri, method, httpEntity, String.class);
     }
@@ -66,7 +66,6 @@ public class HttpServiceImpl implements HttpService {
     public ResponseEntity<String> doHttp(String apiDomain, String apiPath, HttpMethod method,
                                          HttpHeaders headers, Object... pathVariable) {
         String uri = apiDomain + apiPath;
-        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         HttpEntity<Object> httpEntity = new HttpEntity<>(headers);
         return restTemplate.exchange(uri, method, httpEntity, String.class, pathVariable);
     }
@@ -75,7 +74,6 @@ public class HttpServiceImpl implements HttpService {
     public <T> ResponseEntity<String> doHttp(String apiDomain, String apiPath, HttpMethod method,
                                              HttpHeaders headers, T body, Object... pathVariable) {
         String uri = apiDomain + apiPath;
-        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         HttpEntity<T> httpEntity = new HttpEntity<>(body, headers);
         return restTemplate.exchange(uri, method, httpEntity, String.class, pathVariable);
     }
@@ -87,10 +85,9 @@ public class HttpServiceImpl implements HttpService {
 
     @Override
     public ResponseEntity<String> doGet(String apiDomain, String apiPath, HttpHeaders headers,
-                                        HashMap<String, Object> params) {
+                                        Map<String, Object> params) {
         String uri = apiDomain + apiPath;
         uri = uriBuild(uri, params);
-        headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         HttpEntity<Object> httpEntity = new HttpEntity<>(headers);
         return restTemplate.exchange(uri, HttpMethod.GET, httpEntity, String.class);
     }

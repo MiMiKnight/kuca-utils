@@ -5,7 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * HTTP工具类
@@ -17,13 +17,19 @@ public interface HttpService {
 
     /**
      * 空HTTP头
-     * <p>
-     * Content-Type = application/json
      *
      * @return {@link HttpHeaders}
      */
     HttpHeaders emptyHttpHeaders();
 
+    /**
+     * JSON HTTP头
+     * <p>
+     * Content-Type = application/json
+     *
+     * @return {@link HttpHeaders}
+     */
+    HttpHeaders jsonHttpHeaders();
 
     /**
      * uri构建
@@ -33,8 +39,7 @@ public interface HttpService {
      * @param params 请求行参数
      * @return {@link String}
      */
-    String uriBuild(String uri, HashMap<String, Object> params);
-
+    String uriBuild(String uri, Map<String, Object> params);
 
     /**
      * 执行HTTP
@@ -46,7 +51,6 @@ public interface HttpService {
      * @return {@link ResponseEntity}<{@link String}>
      */
     ResponseEntity<String> doHttp(String apiDomain, String apiPath, HttpMethod method, HttpHeaders headers);
-
 
     /**
      * 执行HTTP
@@ -88,7 +92,6 @@ public interface HttpService {
     <T> ResponseEntity<String> doHttp(String apiDomain, String apiPath, HttpMethod method, HttpHeaders headers,
                                       T body, Object... pathVariable);
 
-
     /**
      * 执行Get请求
      *
@@ -98,7 +101,6 @@ public interface HttpService {
      * @return {@link ResponseEntity}<{@link String}>
      */
     ResponseEntity<String> doGet(String apiDomain, String apiPath, HttpHeaders headers);
-
 
     /**
      * 执行Get请求
@@ -110,7 +112,7 @@ public interface HttpService {
      * @return {@link ResponseEntity}<{@link String}>
      */
     ResponseEntity<String> doGet(String apiDomain, String apiPath, HttpHeaders headers,
-                                 HashMap<String, Object> params);
+                                 Map<String, Object> params);
 
     /**
      * 执行Get请求
