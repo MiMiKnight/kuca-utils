@@ -8,14 +8,14 @@
     <parent>
         <groupId>com.github.mimiknight.kuca</groupId>
         <artifactId>kuca-parent-spring-boot-starter</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.1-SNAPSHOT-jdk8</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <!--本工程-->
     <groupId>com.github.mimiknight.kuca</groupId>
     <artifactId>kuca-utils-spring-boot-starter</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT-jdk8</version>
     <packaging>jar</packaging>
     <name>kuca-utils-spring-boot-starter</name>
     <description>kuca-utils-spring-boot-starter</description>
@@ -26,13 +26,13 @@
         <project.encoding>UTF-8</project.encoding>
         <!--Maven 最低运行版本-->
         <maven.version>3.8.0</maven.version>
-        <!--OpenJDK 最低运行版本-->
-        <jdk.version>17.0.2</jdk.version>
+        <!--OracleJDK 最低运行版本-->
+        <jdk.version>1.8.0_371</jdk.version>
         <project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <maven.compiler.version>17</maven.compiler.version>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.version>8</maven.compiler.version>
     </properties>
 
     <!--引入依赖-->
