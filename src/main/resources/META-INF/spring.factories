@@ -1,0 +1,11 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.github.mimiknight.kuca.utils.config.RestTemplateConfig,\
+  com.github.mimiknight.kuca.utils.service.impl.DateTimeServiceImpl,\
+  com.github.mimiknight.kuca.utils.service.impl.RedisServiceImpl,\
+  com.github.mimiknight.kuca.utils.service.impl.RedisLockServiceImpl,\
+  com.github.mimiknight.kuca.utils.service.impl.HttpServiceImpl,\
+  com.github.mimiknight.kuca.utils.service.impl.HttpServiceImpl,\
+  com.github.mimiknight.kuca.utils.service.utils.DateTimeUtils,\
+  com.github.mimiknight.kuca.utils.service.utils.JsonUtils,\
+  com.github.mimiknight.kuca.utils.service.utils.LockUtils,\
+  com.github.mimiknight.kuca.utils.service.utils.HttpUtils
