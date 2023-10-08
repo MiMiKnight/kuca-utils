@@ -50,6 +50,7 @@ public class RestTemplateConfig {
      * <p>
      * BufferingClientHttpRequestFactory的 response body允许多次读取
      *
+     * @param httpRequestFactory http请求工厂
      * @return {@link RestTemplate}
      */
     @Bean(name = "restTemplate")
@@ -64,7 +65,8 @@ public class RestTemplateConfig {
     /**
      * http请求工厂
      *
-     * @return {@link OkHttp3ClientHttpRequestFactory}
+     * @param okHttpClient OkHttp客户端
+     * @return {@link BufferingClientHttpRequestFactory}
      */
     @Bean("OkHttp3ClientHttpRequestFactory")
     public BufferingClientHttpRequestFactory httpRequestFactory(OkHttpClient okHttpClient) {
@@ -127,7 +129,7 @@ public class RestTemplateConfig {
                 .callTimeout(callTimeout, callTimeoutTimeUnit)
                 .hostnameVerifier((hostname, sslSession) -> true)
                 .followRedirects(followRedirects)
-                .sslSocketFactory(sslSocketFactory(),trustManager())
+                .sslSocketFactory(sslSocketFactory(), trustManager())
                 .build();
     }
 
